@@ -9,8 +9,17 @@ class MessageBoard extends Component {
         messages : getMessages()
     } 
 
-    handleClick = (id) => {
+    handleClick = (event, message) => {
         // update likes
+        const messages = [...this.state.messages];
+        const id = messages.indexOf(message);
+        if (event.detail == 2) {
+            messages[id].liked = !messages[id].liked;
+            this.setState({messages});
+        } else if (event.detail == 1) {
+            messages[id].read = true;
+            this.setState({messages});
+        }
     }
 
 

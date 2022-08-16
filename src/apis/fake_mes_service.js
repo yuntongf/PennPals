@@ -9,8 +9,8 @@ const messages = [
         content: "Hi I'm Apple",
         likes: 9,
         reported: false,
-        isClickedLike : false,
-        isClickedContent: false,
+        liked : false,
+        read: false,
         deleted : false
     },
 
@@ -22,8 +22,8 @@ const messages = [
         content: "Hi I'm Apple",
         likes: 0,
         reported: false,
-        isClickedLike : true,
-        isClickedContent: false,
+        liked : true,
+        read: false,
         deleted : false
     },
 
@@ -35,8 +35,8 @@ const messages = [
         content: "Hi I'm Banana",
         likes: 1,
         reported: true,
-        isClickedLike : false,
-        isClickedContent: false,
+        liked : false,
+        read: false,
         deleted : false
     },
 
@@ -48,8 +48,8 @@ const messages = [
         content: "Hi I'm Carrot",
         likes: 6,
         reported: false,
-        isClickedLike : true,
-        isClickedContent: false,
+        liked : true,
+        read: false,
         deleted : false
     },
 
@@ -61,8 +61,8 @@ const messages = [
         content: "Hi I'm Carrot",
         likes: 6,
         reported: false,
-        isClickedLike : false,
-        isClickedContent: true,
+        liked : false,
+        read: true,
         deleted : false
     },
 
@@ -74,8 +74,8 @@ const messages = [
         content: "Hi I'm Carrot",
         likes: 6,
         reported: false,
-        isClickedLike : false,
-        isClickedContent: true,
+        liked : false,
+        read: true,
         deleted : false
     },
 
@@ -87,8 +87,8 @@ const messages = [
         content: "Hi I'm Apple",
         likes: 9,
         reported: false,
-        isClickedLike : false,
-        isClickedContent: false,
+        liked : false,
+        read: false,
         deleted : false
     },
 
@@ -100,8 +100,8 @@ const messages = [
         content: "Hi I'm Apple",
         likes: 9,
         reported: false,
-        isClickedLike : false,
-        isClickedContent: false,
+        liked : false,
+        read: false,
         deleted : false
     }
 

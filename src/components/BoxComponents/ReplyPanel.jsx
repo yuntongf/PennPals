@@ -1,23 +1,23 @@
-import MessageBoxDetail from "../MessageBoxDetail";
+import MessageBoxDetail from "./MessageBoxDetail";
 import ReplyWritingBox from "../BoxComponents/ReplyWritingBox";
 import ReplyDisplayBox from "../BoxComponents/ReplyDisplayBox";
-import BackButton from "../BoxComponents/BackButton";
+import ReplyBoard from '../ReplyBoard';
 
-const ReplyPanel = ({message}) => {
-   return ( 
-      <body className="d-flex justify-content-around">
+const ReplyPanel = ({ message, replies, handleLike, handleReport, handleSubmit }) => {
+
+   return (
+      <div className="d-flex justify-content-between">
          <div className="list-group col-12">
-            <MessageBoxDetail message = {message}/>
+            <MessageBoxDetail message={message} />
             <div className="list-group-item list-group-item-action p-3 flex-column align-items-start">
-               <ReplyDisplayBox/>
+               <ReplyBoard replies={replies} handleLike={handleLike} handleReport={handleReport} handleSubmit={handleSubmit} />
             </div>
             <div className="list-group-item list-group-item-action p-3 flex-column align-items-start">
-               <ReplyWritingBox/>
+               <ReplyWritingBox handleSubmit={handleSubmit} />
             </div>
-            
          </div>
-      </body>
-    );
+      </div>
+   );
 }
- 
+
 export default ReplyPanel;

@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
-import {getMessages} from "../apis/fake_mes_service";
+import { getMessages } from "../apis/fake_mes_service";
 
 class Writing extends Component {
-    state = { 
-        messages : getMessages(),
+    state = {
+        messages: getMessages(),
         write: false,
-    } 
+    }
 
     handleClick = (event) => {
         //console.log(event.target.dataset.remove);
         if (event.detail === 2) {
             //const _id = event.target.dataset.remove;
             this.setState({
-                isClickedLike : !this.state.isClickedLike
-            }); 
-            console.log(this.state.isClickedLike);
+                isClickedLike: !this.state.isClickedLike
+            });
         }
     }
 
     render() {
-        const {write} = this.state;
+        const { write } = this.state;
         if (write === false) {
             return (
                 <form className="card fixed-bottom m-3" >
@@ -45,7 +44,7 @@ class Writing extends Component {
 
                         <button type="submit" className="col-1 btn btn-primary mt-1">Login</button>
                     </div>
-            </form>
+                </form>
             )
         } else {
             return (

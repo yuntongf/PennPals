@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 
 const Dropdown = () => {
    return (
-      <div class="btn-group dropleft position-absolute bottom-0 end-0 m-1">
-         <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div className="btn-group dropleft position-absolute bottom-5 end-0 me-3">
+         <button type="button" id="dropdownMenuLink" className="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          </button>
 
-         <div class="dropdown-menu">
-            <button class="dropdown-item" type="button">reply</button>
-            <button class="dropdown-item" type="button">Something else here</button>
-            <button class="dropdown-item btn-outline-danger" type="button">report</button>
+         <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <button className="dropdown-item" type="button">reply</button>
+            <button className="dropdown-item" type="button">Something else here</button>
+            <button className="dropdown-item btn-outline-danger" type="button">report</button>
          </div>
       </div>
+
    );
 }
 

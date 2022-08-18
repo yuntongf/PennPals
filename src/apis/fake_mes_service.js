@@ -11,7 +11,7 @@ const messages = [
         reported: false,
         liked : false,
         read: false,
-        deleted : false
+        deleted : false,
     },
 
     {
@@ -112,9 +112,4 @@ export function getMessages() {
     return messages;
 }
 
-async function getMessage(id) {
-    setTimeout(() => {
-        const mes = messages.filter(message => message._id === id);
-        return mes.content;
-    }, 4000)
-}
+

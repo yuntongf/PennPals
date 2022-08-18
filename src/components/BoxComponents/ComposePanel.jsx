@@ -1,10 +1,11 @@
 import { React, Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class ReplyWritingBox extends Component {
+class ComposePanel extends Component {
    state = {
-      reply: {
+      message: {
          author: "",
+         title: "",
          content: "",
          likes: 0,
          reported: false,
@@ -15,15 +16,21 @@ class ReplyWritingBox extends Component {
    }
 
    handleAuthorChange = (event) => {
-      const reply = this.state.reply;
-      reply.author = event.target.value;
-      this.setState({ reply });
+      const message = this.state.message;
+      message.author = event.target.value;
+      this.setState({ message });
+   }
+
+   handleTitleChange = (event) => {
+      const message = this.state.message;
+      message.title = event.target.value;
+      this.setState({ message });
    }
 
    handleContentChange = (event) => {
-      const reply = this.state.reply;
-      reply.content = event.target.value;
-      this.setState({ reply });
+      const message = this.state.message;
+      message.content = event.target.value;
+      this.setState({ message });
    }
 
    render() {
@@ -38,12 +45,15 @@ class ReplyWritingBox extends Component {
                   </div>
                   <small className="">For anonymity, please do not enter your real name</small>
 
-                  <h2 className="mt-3" htmlFor="title"> Your Reply </h2>
+                  <h2 className="mt-3" htmlFor="title"> Your Post </h2>
+                  <div className="mt-3 mb-2 form-group">
+                     <textarea onChange={this.handleTitleChange} className="form-control" type="textarea" id="subject" placeholder="Title" maxlength="140" rows="2"></textarea>
+                  </div>
                   <div className="mt-3 mb-3 form-group">
                      <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="140" rows="7"></textarea>
                   </div>
-                  <btn onClick={() => this.props.handleSubmit(this.state.reply, 'r')} id="submit" name="submit" className="btn btn-outline-primary pull-right">
-                     <a href="" className="text-decoration-none">
+                  <btn onClick={() => this.props.handleSubmit(this.state.message)} id="submit" name="submit" className="btn btn-outline-primary pull-right">
+                     <a href="/Compose" className="text-decoration-none">
                         Post
                      </a>
                   </btn>
@@ -54,4 +64,4 @@ class ReplyWritingBox extends Component {
    }
 }
 
-export default ReplyWritingBox;
+export default ComposePanel;

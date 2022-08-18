@@ -14,7 +14,8 @@ export function getMessages() {
 }
 
 export function addMessage(message) {
-  return http.post(apiEndpoint, message);
+  console.log(message);
+  return http.post(apiEndpoint+`/MessageBoard/Compose`, message);
   //return http.post(apiEndpoint, message);
 }
 

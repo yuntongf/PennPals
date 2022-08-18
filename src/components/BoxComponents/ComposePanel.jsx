@@ -52,7 +52,7 @@ class ComposePanel extends Component {
                   <div className="mt-3 mb-3 form-group">
                      <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="140" rows="7"></textarea>
                   </div>
-                  <btn onClick={() => this.props.handleSubmit(this.state.message)} id="submit" name="submit" className="btn btn-outline-primary pull-right">
+                  <btn onClick={() => this.props.handleSubmit(this.state.message, 'm')} id="submit" name="submit" className="btn btn-outline-primary pull-right">
                      <a href="/Compose" className="text-decoration-none">
                         Post
                      </a>

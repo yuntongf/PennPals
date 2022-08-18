@@ -29,8 +29,8 @@ class App extends Component {
   async componentDidMount() {
     const { data:message} = await getMessages();
     this.setState({messages:message});
-    const { data:reply } = await getReplies();
-    this.setState({replies:reply});
+    //const { data:reply } = await getReplies();
+    //this.setState({replies:reply});
   }
 
   /* Back end services
@@ -137,6 +137,18 @@ class App extends Component {
     // MessageServices.addMessage()
   };
 
+  handleReply = async (message) => {
+    console.log("when handlereply at top level the message is", message)
+    const originalMessages = this.state.messages;
+    try {
+      const response = await updateMessage(message);
+      console.log(response);
+    } catch {
+      alert("add reply failed...");
+      this.setState(originalMessages);
+    }
+  }
+
   handleLike = async (message) => {
     const originalMessages = this.state.messages;
     // update likes
@@ -154,47 +166,65 @@ class App extends Component {
 
   };
 
-  handleReport = async (message) => {
-    const originalMessages = this.state.messages;
-    // update likes
-    const messages = [...this.state.messages];
-    const id = messages.indexOf(message);
-    messages[id].reported = messages[id].reported + 1;
-    messages[id].deleted = true;
-    this.setState({ messages });
-    try {
-      await updateMessage(messages[id]);
-    } catch {
-      alert("update failed...")
-    }
-  }
-
-  handleReportReply = async (message) => {
-    const originalMessages = this.state.messages;
-    // update likes
-    const messages = [...this.state.messages];
-    const id = messages.indexOf(message);
-    messages[id].reported = messages[id].reported + 1;
-    messages[id].deleted = true;
-    this.setState({ messages });
-    try {
-      await updateMessage(messages[id]);
-    } catch {
-      alert("update failed...")
-    }
-  }
-
-  handleDelete = async (mes) => {
-    const originalMessages = this.state.messages;
-    const messages = this.state.messages.filter((m) => m._id != mes._id);
-    try {
-      await deleteMessage(mes);
-    } catch (e) {
-      alert("delete failed...");
-      if (e.response && e.response.status === 404) {
-        alert("404 message does not exist");
+  handleReport = async (m, t) => {
+    if (t==='m') {
+      const originalMessages = this.state.messages;
+      // update likes
+      const messages = [...this.state.messages];
+      const id = messages.indexOf(m);
+      messages[id].reported = messages[id].reported + 1;
+      messages[id].deleted = true;
+      this.setState({ messages });
+      try {
+        await updateMessage(messages[id]);
+      } catch {
+        alert("update failed...")
+        this.setState(originalMessages);
       }
+    } else if (t==='r') {
+      const originalMessages = this.state.messages;
+      // update likes
+      const messages = [...this.state.messages];
+      const id = messages.indexOf(m);
+      messages[id].reported = messages[id].reported + 1;
+      messages[id].deleted = true;
+      this.setState({ messages });
+      try {
+        await updateMessage(messages[id]);
+      } catch {
+        alert("update failed...")
+        this.setState(originalMessages);
+      }
+    }
+  }
+
+  handleDelete = async (mes, t) => {
+    if (t==='m') {
+      const originalMessages = this.state.messages;
+      const messages = this.state.messages.filter((m) => m._id != mes._id);
       this.setState(messages);
+      try {
+        await deleteMessage(mes);
+      } catch (e) {
+        alert("delete failed...");
+        if (e.response && e.response.status === 404) {
+          alert("404 message does not exist");
+        }
+        this.setState(originalMessages);
+      }
+    } else if (t==='r') {
+      const originalMessages = this.state.messages;
+      const messages = this.state.messages.filter((m) => m._id != mes._id);
+      this.setState(messages);
+      try {
+        await deleteMessage(mes);
+      } catch (e) {
+        alert("delete failed...");
+        if (e.response && e.response.status === 404) {
+          alert("404 message does not exist");
+          this.setState(originalMessages);
+        }
+      }
     }
   };
 
@@ -229,10 +259,9 @@ class App extends Component {
               element={
                 <MessagePage
                   messages={this.state.messages}
-                  replies={this.state.replies}
                   handleLike={(m, t) => this.handleLike(m, t)}
-                  handleReport={(m, t)=>this.handleReport(m, t)}
-                  handleSubmit={(m, t)=>this.handleSubmit(m, t)}
+                  handleReport={(m, t)=>this.handleDelete(m, t)}
+                  handleReply={(m)=>this.handleReply(m)}
                 />
               }
             />
@@ -243,6 +272,7 @@ class App extends Component {
                   messages={this.state.messages}
                   handleLike={(m, t) => this.handleLike(m,t)}
                   handleSubmit={(m, t) => this.handleSubmit(m, t)}
+                  handleReport={(m, t)=>this.handleDelete(m, t)}
                 />
               }
             />

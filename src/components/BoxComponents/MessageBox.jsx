@@ -5,7 +5,7 @@ import Dropdown from "./Dropdown";
 import { Link, useNavigate } from "react-router-dom";
 import ReportButton from "./ReportButton";
 
-const MessageBox = ({ handleLike, handleReport, message, id }) => {
+const MessageBox = ({ handleLike, handleReport, message }) => {
    let classesRead = "card list-group-item list-group-item-action m-2 p-4 flex-column align-items-start";
    if (message.read) classesRead += " bg-gray bg-darken-sm"
    return (

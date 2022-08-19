@@ -11,7 +11,6 @@ const MessageBoard = ({ messages, handleLike, handleReport, handleDelete }) => {
             <div className="col-9">
                 <Board messages={messages} handleLike={handleLike} handleDelete={handleDelete} handleReport={handleReport} />
             </div>
-            <div><p>NODE_ENV is</p>{process.env.NODE_ENV}</div>
         </div>
     );
 }

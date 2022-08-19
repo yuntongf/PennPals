@@ -1,9 +1,8 @@
 import { React, Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { ToastContainer, toast } from "react-toastify";
 class ReplyWritingBoard extends Component {
    state = {
-      message: this.props.message,
       reply: {
          author: "",
          content: "",
@@ -27,11 +26,15 @@ class ReplyWritingBoard extends Component {
       console.log(this.state.reply.content);
    }
 
-   handleSubmit = () => {
-      let msg = this.props.message;
-      msg.replies = [...this.props.message.replies, this.state.reply];
-      this.setState({ message: msg });
-      return this.props.handleReply(this.state.message);
+   handleComment = () => {
+      let msg = { ...this.props.message };
+      console.log(msg);
+      console.log(this.state.reply);
+      msg.replies = [...msg.replies, this.state.reply];
+      //this.setState({ message: msg });
+      console.log(msg);
+      return this.props.handleReply(msg);
+
    }
 
    render() {
@@ -49,13 +52,15 @@ class ReplyWritingBoard extends Component {
                   <div className="mt-3 m-2 mb-3 form-group">
                      <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="140" rows="7"></textarea>
                   </div>
-                  <a href="/MessageBoard">
-                     <btn onClick={this.handleSubmit} id="submit" name="submit" className="m-2 btn btn-outline-primary pull-right">
+                  <Link to="/MessageBoard">
+                     <btn onClick={this.handleComment} id="submit" name="submit" className="m-2 btn btn-outline-primary pull-right">
                         <div className="text-decoration-none">
                            Comment
                         </div>
                      </btn>
-                  </a>
+                  </Link>
+
+
                </form>
             </div>
          </div>

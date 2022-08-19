@@ -28,7 +28,7 @@ export function updateMessage(message) {
   if (message._id) {
     const body = { ...message};
     delete body._id;
-    console.log(apiEndpoint+`/${message._id}`);
+    //console.log(apiEndpoint+`/${message._id}`);
     return http.put(apiEndpoint+`/MessageBoard/Message/${message._id}`, body);
   }
   return http.post(apiEndpoint+`/MessageBoard/Message/${message._id}`, message);

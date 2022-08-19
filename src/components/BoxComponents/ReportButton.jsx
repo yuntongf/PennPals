@@ -1,7 +1,13 @@
 const ReportButton = ({ message, handleReport }) => {
+   const handleReportMessage = () => {
+      let msg = message;
+      msg.reported++;
+      msg.deleted = true;
+      return handleReport(msg);
+   }
    return (
-      <btn className="btn btn-sm btn-outline-light" onClick={() => handleReport(message, 'm')}>
-         <a style={{ color: "#F57774" }} className="text-decoration-none text-color-none" href={window.location}>Delete</a>
+      <btn className="btn btn-sm btn-outline-light" onClick={() => handleReport(message)}>
+         <div style={{ color: "#607D8B" }} className="text-decoration-none text-color-none" ><i>&#x2193;</i>{message.reported}</div>
       </btn>
    );
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "./App.css";
 import MessageBoard from "./components/MessageBoard";
 import MessagePage from "./components/MessagePage";
@@ -33,116 +33,55 @@ class App extends Component {
     //this.setState({replies:reply});
   }
 
-  /* Back end services
-  handleAdd = async () => {
+  handleSubmit = async (message) => {
     const originalMessages = this.state.messages;
-    const mes = {
-      _id: 1,
-      user: "August",
-      author: "Apple",
-      title: "Saying Hi",
-      content: "Hi I'm Apple",
-      likes: 0,
-      reported: false,
-      liked: true,
-      read: false,
-      deleted: false,
-    };
-    const messages = [mes, ...this.state.messages];
-    this.setState({ messages });
+    let msgs = [message, ...this.state.messages];
+    //this.setState({ messages: msgs});
     try {
-      http.post(config.apiEndPoint, mes);
+    const {data} = await addMessage(message);
+    const messages = [data, ...this.state.messages];
+    toast.success('🦄 Posted!', {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+    this.setState({ messages });
+    //this.window.reload()
     } catch {
       alert("add failed...");
       this.setState(originalMessages);
     }
-  };
+    
+  } 
 
-  handleUpdate = async (mes) => {
-    const originalMessages = this.state.messages;
-    mes.likes++;
-    let messages = [...this.state.messages];
-    const index = messages.indexOf(mes);
-    messages[index] = { ...mes };
-    this.setState(messages);
-    try {
-      await http.put(`${config.apiEndPoint}/${mes._id}`, mes);
-    } catch {
-      alert("update failed...");
-      this.setState(originalMessages);
-    }
-  };
-
-  handleDelete = async (mes) => {
-    const originalMessages = this.state.messages;
-    const messages = this.state.messages.filter((m) => m._id != mes._id);
-    try {
-      await http.delete(`${config.apiEndPoint}/${mes._id}`);
-    } catch (e) {
-      alert("delete failed...");
-      if (e.response && e.response.status === 404) {
-        alert("message does not exist");
-      }
-      this.setState(messages);
-    }
-  };
-
-  /*  state = {
-    messages : []
-  }
-
-  async componentDidMount() {
-    // async function to initialize data
-    // pending > resolved or rejected
-    const {data : messages} = await http.get(config.apiEndPoint);
-    this.setState({messages});
-  }
-  
-  handleAdd = () => {
-
-  }
-
-  handleUpdate = () => {
-
-  }
-
-  handleDelete = () => {
-
-  }*/
-
-  handleSubmit = async (message, t) => {
-    if (t==='m'){
-      const originalMessages = this.state.messages;
-      try {
-      const {data} = await addMessage(message);
-      const messages = [data, ...this.state.messages];
-      this.setState({ messages });
-      //this.window.reload()
-      } catch {
-        alert("add failed...");
-        this.setState(originalMessages);
-      }
-    } else if (t==='r') {
-      const originalReplies = this.state.replies;
-      try {
-      const {data} = await addReply(message);
-      const replies = [data, ...this.state.replies];
-      this.setState({ replies });
-      //this.window.reload()
-      } catch {
-        alert("add failed...");
-        this.setState(originalReplies);
-      }
-    }
-    // MessageServices.addMessage()
-  };
 
   handleReply = async (message) => {
-    console.log("when handlereply at top level the message is", message)
-    const originalMessages = this.state.messages;
+    //console.log("when handlereply at top level the message is", message)
+    const originalMessages = {...this.state.messages};
+    let msgs = [...this.state.messages];
+    console.log(message);
+    const mesOther = msgs.filter((m) => (m._id!==message._id));
+    msgs = [...mesOther, message];
+    this.setState({ messages:msgs });
+    toast.success('🦄 Comment posted!', {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+    //this.setState({messages:msgs});
     try {
-      const response = await updateMessage(message);
-      console.log(response);
+      const {data} = await updateMessage(message);
+      //msgs[id] = data;
+      //this.setState({ messages:msgs });
+      
     } catch {
       alert("add reply failed...");
       this.setState(originalMessages);
@@ -154,9 +93,7 @@ class App extends Component {
     // update likes
     const messages = [...this.state.messages];
     const id = messages.indexOf(message);
-    messages[id].liked = !messages[id].liked;
-    if (messages[id].liked) messages[id].likes = messages[id].likes + 1;
-    else messages[id].likes = messages[id].likes - 1;
+    messages[id].replies = message.replies;
     this.setState({ messages });
     try {
       await updateMessage(messages[id]);
@@ -166,88 +103,37 @@ class App extends Component {
 
   };
 
-  handleReport = async (m, t) => {
-    if (t==='m') {
-      const originalMessages = this.state.messages;
-      // update likes
-      const messages = [...this.state.messages];
-      const id = messages.indexOf(m);
-      messages[id].reported = messages[id].reported + 1;
-      messages[id].deleted = true;
-      this.setState({ messages });
-      try {
-        await updateMessage(messages[id]);
-      } catch {
-        alert("update failed...")
-        this.setState(originalMessages);
-      }
-    } else if (t==='r') {
-      const originalMessages = this.state.messages;
-      // update likes
-      const messages = [...this.state.messages];
-      const id = messages.indexOf(m);
-      messages[id].reported = messages[id].reported + 1;
-      messages[id].deleted = true;
-      this.setState({ messages });
-      try {
-        await updateMessage(messages[id]);
-      } catch {
-        alert("update failed...")
-        this.setState(originalMessages);
-      }
+  handleReport = async (m) => {
+    const originalMessages = this.state.messages;
+    // update likes
+    const messages = [...this.state.messages];
+    const id = messages.indexOf(m);
+    messages[id].replies = m.replies;
+    this.setState({ messages });
+    try {
+      await updateMessage(messages[id]);
+    } catch {
+      alert("update failed...")
+      this.setState(originalMessages);
     }
   }
 
-  handleDelete = async (mes, t) => {
-    if (t==='m') {
-      const originalMessages = this.state.messages;
-      const messages = this.state.messages.filter((m) => m._id != mes._id);
-      this.setState(messages);
-      try {
-        await deleteMessage(mes);
-      } catch (e) {
-        alert("delete failed...");
-        if (e.response && e.response.status === 404) {
-          alert("404 message does not exist");
-        }
-        this.setState(originalMessages);
+  handleDelete = async (mes) => {
+    const originalMessages = this.state.messages;
+    const messages = this.state.messages.filter((m) => m._id != mes._id);
+    this.setState(messages);
+    try {
+      await deleteMessage(mes);
+    } catch (e) {
+      alert("delete failed...");
+      if (e.response && e.response.status === 404) {
+        alert("404 message does not exist");
       }
-    } else if (t==='r') {
-      const originalMessages = this.state.messages;
-      const messages = this.state.messages.filter((m) => m._id != mes._id);
-      this.setState(messages);
-      try {
-        await deleteMessage(mes);
-      } catch (e) {
-        alert("delete failed...");
-        if (e.response && e.response.status === 404) {
-          alert("404 message does not exist");
-          this.setState(originalMessages);
-        }
-      }
+      this.setState(originalMessages);
     }
   };
 
   render() {
-    /* sticky navbar
-    
-    let navbar = document.getElementById("main-nav");
-    let navPos = navbar.getBoundingClientRect().top;
-
-    let timVine = document.getElementById("tim-vine");
-
-    window.addEventListener("scroll", e => {
-    let viewportHeight = window.innerHeight;
-    let scrollPos = window.scrollY;
-    if (scrollPos > navPos) {
-        navbar.classList.add('sticky');
-        header.classList.add('navbarOffsetMargin');
-    } else {
-        navbar.classList.remove('sticky');
-        header.classList.remove('navbarOffsetMargin');
-        }
-    });*/
-
     return (
       <div>
         <ToastContainer />
@@ -259,9 +145,10 @@ class App extends Component {
               element={
                 <MessagePage
                   messages={this.state.messages}
-                  handleLike={(m, t) => this.handleLike(m, t)}
-                  handleReport={(m, t)=>this.handleDelete(m, t)}
+                  handleLike={(m) => this.handleLike(m)}
+                  handleReport={(m)=>this.handleReport(m)}
                   handleReply={(m)=>this.handleReply(m)}
+                  handleDelete={(m) => this.handleDelete(m)}
                 />
               }
             />
@@ -270,9 +157,10 @@ class App extends Component {
               element={
                 <MessageCompose
                   messages={this.state.messages}
-                  handleLike={(m, t) => this.handleLike(m,t)}
-                  handleSubmit={(m, t) => this.handleSubmit(m, t)}
-                  handleReport={(m, t)=>this.handleDelete(m, t)}
+                  handleLike={(m) => this.handleLike(m)}
+                  handleSubmit={(m) => this.handleSubmit(m)}
+                  handleReport={(m)=>this.handleReport(m)}
+                  handleDelete={(m) => this.handleDelete(m)}
                 />
               }
             />
@@ -281,8 +169,9 @@ class App extends Component {
               element={
                 <MessageBoard
                   messages={this.state.messages}
-                  handleLike={(m, t) => this.handleLike(m, t)}
-                  handleReport={(m, t) => this.handleDelete(m, t)}
+                  handleLike={(m) => this.handleLike(m)}
+                  handleReport={(m) => this.handleReport(m)}
+                  handleDelete={(m) => this.handleDelete(m)}
                 />
               }
             />
@@ -292,8 +181,9 @@ class App extends Component {
               element={
                 <MessageBoard
                   messages={this.state.messages}
-                  handleLike={(m, t) => this.handleLike(m, t)}
-                  handleReport={(m, t) => this.handleDelete(m, t)}
+                  handleLike={(m) => this.handleLike(m)}
+                  handleReport={(m) => this.handleReport(m)}
+                  handleDelete={(m) => this.handleDelete(m)}
                 />
               }
             />

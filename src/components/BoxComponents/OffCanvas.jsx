@@ -1,12 +1,11 @@
 import BackButton from "./BackButton";
 import ReplyPanel from "../ReplyPanel";
-import Like from "./Like";
 
 const OffCanvas = ({ messages, handleLike, handleReport, handleReply }) => {
    console.log(messages);
    return (
-      <div className="col-10 d-flex justify-content-start">
-         <div className="offcanvas show offcanvas-end border-0 bg-transparent pe-5" style={{ width: 540 }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="reply" aria-labelledby="offcanvasScrollingLabel">
+      <div className="col-10 d-flex justify-content-start p-2">
+         <div className="offcanvas show offcanvas-end border-0 bg-transparent pe-5" style={{ width: 560 }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="reply" aria-labelledby="offcanvasScrollingLabel">
             <div className="mb-0 me-4 mt-2 d-flex justify-content-end">
                <div className="d-flex justify-content-end" style={{ width: 300 }}><BackButton /></div>
             </div>

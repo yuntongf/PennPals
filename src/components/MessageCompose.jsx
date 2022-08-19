@@ -2,12 +2,12 @@ import ComposePanel from "./BoxComponents/ComposePanel";
 import BackButton from "./BoxComponents/BackButton";
 import MessageBoard from "./MessageBoard";
 
-const MessageCompose = ({ messages, handleLike, handleSubmit, handleReport }) => {
+const MessageCompose = ({ messages, handleLike, handleSubmit, handleReport, handleDelete }) => {
    return (
       <div>
          <div className="col-12 d-flex justify-content-end">
             <span className="col-4">
-               <MessageBoard messages={messages} handleLike={handleLike} handleReport={handleReport} />
+               <MessageBoard messages={messages} handleLike={handleLike} handleReport={handleReport} handleDelete={handleDelete} />
             </span>
          </div>
 

@@ -1,9 +1,9 @@
 
-const Hd = ({message}) => {
+const Hd = ({ message }) => {
    //console.log(message);
    return (
       <div className="flex-column justify-content-between">
-         <h5> {message.title} </h5>
+         <h4> {message.title} </h4>
       </div>
    );
 }

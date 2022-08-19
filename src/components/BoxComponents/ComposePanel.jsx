@@ -41,21 +41,21 @@ class ComposePanel extends Component {
                   <h2 className="" htmlFor="title" > Name </h2>
 
                   <div className="mt-3 mb-1 form-group">
-                     <textarea onChange={this.handleAuthorChange} className="form-control" type="textarea" id="subject" placeholder="Your name" maxlength="140" rows="1"></textarea>
+                     <textarea onChange={this.handleAuthorChange} className="form-control" type="textarea" id="subject" placeholder="Anonymous" maxlength="10" rows="1"></textarea>
                   </div>
                   <small className="">For anonymity, please do not enter your real name</small>
 
                   <h2 className="mt-3" htmlFor="title"> Your Post </h2>
                   <div className="mt-3 mb-2 form-group">
-                     <textarea onChange={this.handleTitleChange} className="form-control" type="textarea" id="subject" placeholder="Title" maxlength="140" rows="2"></textarea>
+                     <textarea onChange={this.handleTitleChange} className="form-control" type="textarea" id="subject" placeholder="Title" maxlength="150" rows="2"></textarea>
                   </div>
                   <div className="mt-3 mb-3 form-group">
-                     <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="140" rows="7"></textarea>
+                     <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="1000" rows="7"></textarea>
                   </div>
-                  <btn onClick={() => this.props.handleSubmit(this.state.message, 'm')} id="submit" name="submit" className="btn btn-outline-primary pull-right">
-                     <a href="/Compose" className="text-decoration-none">
+                  <btn onClick={() => this.props.handleSubmit(this.state.message)} id="submit" name="submit" className="btn btn-outline-primary pull-right">
+                     <div className="text-decoration-none">
                         Post
-                     </a>
+                     </div>
                   </btn>
                </form>
             </div>

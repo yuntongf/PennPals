@@ -1,6 +1,5 @@
 import http from "./HttpService";
 const apiEndpoint = "http://localhost:3500";
-
 /*
 function mesUrl(id) {
   return `${apiEndpoint}/${id}`;
@@ -10,17 +9,16 @@ export function getMessage(id) {
 }*/
 
 export function getMessages() {
-  return http.get(apiEndpoint);
+  return http.get("");
 }
 
 export function addMessage(message) {
-  console.log(message);
-  return http.post(apiEndpoint+`/MessageBoard/Compose`, message);
+  return http.post(`/MessageBoard/Compose`, message);
   //return http.post(apiEndpoint, message);
 }
 
 export function deleteMessage(message) {
-  return http.delete(apiEndpoint+`/MessageBoard/Message/${message._id}`, message);
+  return http.delete(`/MessageBoard/Message/${message._id}`, message);
   //return http.post(apiEndpoint, message);
 }
 
@@ -28,10 +26,9 @@ export function updateMessage(message) {
   if (message._id) {
     const body = { ...message};
     delete body._id;
-    //console.log(apiEndpoint+`/${message._id}`);
-    return http.put(apiEndpoint+`/MessageBoard/Message/${message._id}`, body);
+    return http.put(`/MessageBoard/Message/${message._id}`, body);
   }
-  return http.post(apiEndpoint+`/MessageBoard/Message/${message._id}`, message);
+  return http.post(`/MessageBoard/Message/${message._id}`, message);
 }
 
 /*

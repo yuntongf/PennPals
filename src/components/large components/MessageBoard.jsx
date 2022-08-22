@@ -1,9 +1,4 @@
-import React, { Component } from 'react';
-import MessageBox from "./BoxComponents/MessageBox";
-import NavBar from './NavBar';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { Link, Route } from 'react-router-dom';
-import Board from './BoxComponents/Board'
+import Board from './MessageBoard/Board'
 
 const MessageBoard = ({ messages, handleLike, handleReport, handleDelete }) => {
     return (

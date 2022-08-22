@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import MessageBoard from "./MessageBoard";
-import OffCanvas from "./BoxComponents/OffCanvas";
+import MessageBoard from "../large components/MessageBoard";
+import OffCanvas from "../large components/OffCanvas";
 
 const MessagePage = ({ messages, handleLike, handleReport, handleReply, handleDelete }) => {
    const { id } = useParams();

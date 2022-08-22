@@ -1,6 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import logger from './LogService';
 
 /*if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "http://localhost:3500";

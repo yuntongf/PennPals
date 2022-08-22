@@ -1,6 +1,3 @@
-import ReportButton from "./ReportButton";
-import Like from "./Like";
-
 const ReplyBox = ({ message, reply, handleLike, handleReport }) => {
    let classesLike = "btn btn-sm me-2 col-1 btn-outline-light";
    if (reply.liked) classesLike = "btn btn-sm me-2 btn-outline-danger";

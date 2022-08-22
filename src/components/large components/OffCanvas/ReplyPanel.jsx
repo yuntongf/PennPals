@@ -1,5 +1,5 @@
-import ReplyWritingBoard from "./BoxComponents/ReplyWritingBoard";
-import ReplyDisplayBoard from './BoxComponents/ReplyDisplayBoard';
+import ReplyWritingBoard from "./ReplyPanel/ReplyWritingBoard";
+import ReplyDisplayBoard from './ReplyPanel/ReplyDisplayBoard';
 
 const ReplyPanel = ({ message, handleLike, handleReport, handleReply }) => {
    return (

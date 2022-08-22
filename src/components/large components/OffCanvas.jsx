@@ -1,5 +1,5 @@
-import BackButton from "./BackButton";
-import ReplyPanel from "../ReplyPanel";
+import BackButton from "../common/BackButton";
+import ReplyPanel from "./OffCanvas/ReplyPanel";
 
 const OffCanvas = ({ messages, handleLike, handleReport, handleReply }) => {
    console.log(messages);

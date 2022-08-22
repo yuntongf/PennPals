@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 
 const Like = ({ message, handleLike }) => {
    let classesLike = "btn mb-2 me-2 col-1 btn-outline-dark";

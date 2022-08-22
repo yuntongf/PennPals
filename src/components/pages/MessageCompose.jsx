@@ -1,6 +1,6 @@
-import ComposePanel from "./BoxComponents/ComposePanel";
-import BackButton from "./BoxComponents/BackButton";
-import MessageBoard from "./MessageBoard";
+import ComposePanel from "../large components/ComposePanel";
+import BackButton from "../common/BackButton";
+import MessageBoard from "../large components/MessageBoard";
 
 const MessageCompose = ({ messages, handleLike, handleSubmit, handleReport, handleDelete }) => {
    return (
@@ -10,8 +10,6 @@ const MessageCompose = ({ messages, handleLike, handleSubmit, handleReport, hand
                <MessageBoard messages={messages} handleLike={handleLike} handleReport={handleReport} handleDelete={handleDelete} />
             </span>
          </div>
-
-
          <div className="col-10 d-flex justify-content-start">
             <div className="offcanvas show offcanvas-start border-0 bg-transparent ps-5" style={{ width: 960 }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="reply" aria-labelledby="offcanvasScrollingLabel">
                <div className="mb-0 me-3 mt-2 d-flex justify-content-end">

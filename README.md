@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# PennPals
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+A platform for Penn students where can talk about anything anonymously🗣. The main page includes a NavBar and a message board with all the posts, where users can like, downvote and delete. Clicking on each message can lead to a reply page. Users can post supportive replies<3 and like or downvote replies. The Compose section allows users to create their own posts.
 
-## Available Scripts
+## Motivation
+In the past year as a freshman, I saw many of my friends at college struggle with life issues like finding good class recommendation, navigating campus resources, selling and buying second-hand goods, finding sublets for summer, etc. More importanly, many are fighting the battle of mental illness on their own. College can be hard. Hopefully having a supportive community to be there will make it easier❤️. 
 
-In the project directory, you can run:
+the message board is anonynous because I believe true heart-reaching communications can happen without the presence of real names, and people are generally more willing to be open to share thoughts under anonymity. However, I'm fully aware that having anonymity in place magnifies both sides of the human nature, which is why I set up mechanisms such as downvote and admin delete to hopefully maintain a supportive and friendly environment.
 
-### `npm start`
+## How to use
+The app is deployed on https://penn-pals.herokuapp.com/MessageBoard
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tools I used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Built backend with Node.js, database with MongoDB and Mongoose, frontend with React and Bootstrap; deployed with Heroku.
 
-### `npm test`
+## Improvements and bug fixes to be implemented
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Enable user authentication and athorization; give only admin the ability to delete posts
 
-### `npm run build`
+2. Keep track of Likes for users so when they refresh the page they cannot like again the post they have liked earlier. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Error logging
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Implement the "Categories", "Liked", and search bar feature for NavBar.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

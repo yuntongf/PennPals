@@ -1,10 +1,9 @@
 // draws each message box
-import Like from "./Like";
-import Hd from "./Hd";
-import Dropdown from "./Dropdown";
-import { Link, useNavigate } from "react-router-dom";
-import ReportButton from "./ReportButton";
-import DeleteButton from './DeleteButton';
+import Like from "../../common/Like";
+import Hd from "../../common/Hd";
+import { Link } from "react-router-dom";
+import ReportButton from "../../common/ReportButton";
+import DeleteButton from "../../common/DeleteButton";
 
 const MessageBox = ({ handleLike, handleDelete, handleReport, message, handleEdit }) => {
    let classesRead = "card list-group-item list-group-item-action m-2 p-4 flex-column align-items-start";

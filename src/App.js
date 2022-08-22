@@ -1,27 +1,19 @@
 import React, { Component } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "./App.css";
-import MessageBoard from "./components/MessageBoard";
-import MessagePage from "./components/MessagePage";
-import MessageCompose from "./components/MessageCompose";
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import NotFound from "./components/NotFound";
-//import { getMessages } from "./apis/fake_mes_service";
-import { getMessages, addMessage, updateMessage, deleteMessage} from "./services/MessageService";
 import { Navigate } from "react-router-dom";
-import http from "./services/HttpService";
-import config from "./config.json";
-import {addReply, getReplies} from './services/ReplyService';
-
-//import http from "./services/HttpService";
-//import config from "./config.json";
-
+import { ToastContainer, toast } from "react-toastify";
+import NavBar from "./components/large components/NavBar";
+import NotFound from "./components/pages/NotFound";
+import MessageReply from "./components/pages/MessageReply";
+import MessageBoard from "./components/large components/MessageBoard";
+import MessageCompose from "./components/pages/MessageCompose";
+import { getMessages, addMessage, updateMessage, deleteMessage} from "./services/MessageService";
+import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+
 
 class App extends Component {
   state = {
-    // page : the page that we are on
     messages: [],
     replies: []
   };
@@ -29,14 +21,11 @@ class App extends Component {
   async componentDidMount() {
     const { data:message} = await getMessages();
     this.setState({messages:message});
-    //const { data:reply } = await getReplies();
-    //this.setState({replies:reply});
   }
 
   handleSubmit = async (message) => {
     const originalMessages = this.state.messages;
     let msgs = [message, ...this.state.messages];
-    //this.setState({ messages: msgs});
     try {
     const {data} = await addMessage(message);
     const messages = [data, ...this.state.messages];
@@ -50,7 +39,6 @@ class App extends Component {
       progress: undefined,
       });
     this.setState({ messages });
-    //this.window.reload()
     } catch {
       alert("add failed...");
       this.setState(originalMessages);
@@ -60,7 +48,6 @@ class App extends Component {
 
 
   handleReply = async (message) => {
-    //console.log("when handlereply at top level the message is", message)
     const originalMessages = {...this.state.messages};
     let msgs = [...this.state.messages];
     console.log(message);
@@ -76,11 +63,8 @@ class App extends Component {
       draggable: true,
       progress: undefined,
       });
-    //this.setState({messages:msgs});
     try {
       const {data} = await updateMessage(message);
-      //msgs[id] = data;
-      //this.setState({ messages:msgs });
       
     } catch {
       alert("add reply failed...");
@@ -90,7 +74,6 @@ class App extends Component {
 
   handleLike = async (message) => {
     const originalMessages = this.state.messages;
-    // update likes
     const messages = [...this.state.messages];
     const id = messages.indexOf(message);
     messages[id].replies = message.replies;
@@ -105,7 +88,6 @@ class App extends Component {
 
   handleReport = async (m) => {
     const originalMessages = this.state.messages;
-    // update likes
     const messages = [...this.state.messages];
     const id = messages.indexOf(m);
     messages[id].replies = m.replies;
@@ -143,7 +125,7 @@ class App extends Component {
             <Route
               path="/MessageBoard/:id"
               element={
-                <MessagePage
+                <MessageReply
                   messages={this.state.messages}
                   handleLike={(m) => this.handleLike(m)}
                   handleReport={(m)=>this.handleReport(m)}

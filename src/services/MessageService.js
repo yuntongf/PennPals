@@ -1,12 +1,5 @@
 import http from "./HttpService";
 const apiEndpoint = "http://localhost:3500";
-/*
-function mesUrl(id) {
-  return `${apiEndpoint}/${id}`;
-}
-export function getMessage(id) {
-  return http.get(mesUrl(id));
-}*/
 
 export function getMessages() {
   return http.get("");
@@ -14,12 +7,10 @@ export function getMessages() {
 
 export function addMessage(message) {
   return http.post(`/MessageBoard/Compose`, message);
-  //return http.post(apiEndpoint, message);
 }
 
 export function deleteMessage(message) {
   return http.delete(`/MessageBoard/Message/${message._id}`, message);
-  //return http.post(apiEndpoint, message);
 }
 
 export function updateMessage(message) {
@@ -30,13 +21,3 @@ export function updateMessage(message) {
   }
   return http.post(`/MessageBoard/Message/${message._id}`, message);
 }
-
-/*
-export function postMessage(message) {
-  if (message._id) {
-    const body = { ...message };
-    delete body._id;
-    return http.put(movieUrl(message._id), body);
-  }
-  return http.post(apiEndpoint, message);
-}*/

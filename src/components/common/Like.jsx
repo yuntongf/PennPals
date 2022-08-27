@@ -10,7 +10,7 @@ const Like = ({ message, handleLike }) => {
    }
    if (message.liked) classesLike = "btn me-2 mb-2 btn-outline-danger";
    return (
-      <btn onClick={handleLikeMessage} className={classesLike} style={{ width: 70 }}>
+      <btn onClick={handleLikeMessage} className={classesLike} style={{ width: 63 }}>
          <i>&#x2665;</i> {message.likes}
       </btn>
    );

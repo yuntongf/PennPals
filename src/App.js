@@ -68,7 +68,7 @@ class App extends Component {
 
 
   handleReply = async (message) => {
-    if (!message) return;
+    //if (!message) return;
     const originalMessages = {...this.state.messages};
     let msgs = [...this.state.messages];
     const mesOther = msgs.filter((m) => (m._id!==message._id));

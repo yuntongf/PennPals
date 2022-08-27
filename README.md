@@ -1,7 +1,7 @@
 # PennPals
 
 ## Description
-A platform for Penn students to talk about anything🗣. The main page includes a NavBar and a message board with all the posts, where users can like, downvote and delete. Clicking on each message can lead to a reply page. Users can post comments and like or downvote replies. The Compose section allows users to create their own posts. To use the app, go to https://penn-pals.herokuapp.com/MessageBoard.
+A platform for Penn students to talk about anything🗣. The main page includes a NavBar and a message board with all the posts, where users can like, downvote and delete. Clicking on each message can lead to a reply page. Users can post comments and like or downvote replies. The Compose section allows users to create their own posts. To use the app, please go to https://penn-pals.herokuapp.com/MessageBoard.
 
 ## Motivation
 In the past year as a freshman, I saw many of my friends at college struggle with life issues like finding good class recommendation, navigating campus resources, selling and buying second-hand goods, finding sublets for summer, etc. More importanly, many are fighting the battle of mental illness on their own. College can be hard. Hopefully having a supportive community to be there will make it easier❤️. 

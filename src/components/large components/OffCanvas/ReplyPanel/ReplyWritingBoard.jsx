@@ -38,13 +38,11 @@ class ReplyWritingBoard extends Component {
                   <div className="mt-3 m-2 mb-3 form-group">
                      <textarea onChange={this.handleContentChange} className="form-control" type="textarea" id="subject" placeholder="Your comment" maxlength="140" rows="7"></textarea>
                   </div>
-                  <a href={`/MessageBoard`}>
-                     <btn onClick={this.handleComment} id="submit" name="submit" className="m-2 btn btn-outline-primary pull-right">
-                        <div className="text-decoration-none">
-                           Comment
-                        </div>
-                     </btn>
-                  </a>
+                  <btn onClick={this.handleComment} id="submit" name="submit" className="m-2 btn btn-outline-primary pull-right">
+                     <div className="text-decoration-none">
+                        Comment
+                     </div>
+                  </btn>
 
 
                </form>

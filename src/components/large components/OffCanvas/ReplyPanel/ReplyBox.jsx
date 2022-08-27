@@ -1,4 +1,8 @@
+import { useContext } from 'react';
+import UserContext from '../../../contexts/UserContexts';
+
 const ReplyBox = ({ message, reply, handleLike, handleReport }) => {
+   const user = useContext(UserContext);
    let classesLike = "btn btn-sm me-2 col-1 btn-outline-light";
    if (reply.liked) classesLike = "btn btn-sm me-2 btn-outline-danger";
    const repliesOther = message.replies.filter((r) => r._id != reply._id);
@@ -41,9 +45,9 @@ const ReplyBox = ({ message, reply, handleLike, handleReport }) => {
                   <btn className="btn btn-sm btn-outline-light" onClick={handleReportReply}>
                      <div style={{ color: "#607D8B" }} className="text-decoration-none text-color-none" ><i>&#x2193;</i>{reply.reported}</div>
                   </btn>
-                  <btn className="btn btn-sm btn-outline-light" onClick={handleDeleteReply}>
+                  {user.username === 'admin' && <btn className="btn btn-sm btn-outline-light" onClick={handleDeleteReply}>
                      <div style={{ color: "#607D8B" }} className="text-decoration-none text-color-none" >X</div>
-                  </btn>
+                  </btn>}
                </div>
             </div>
          </div>

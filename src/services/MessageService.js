@@ -1,8 +1,11 @@
 import http from "./HttpService";
-const apiEndpoint = "http://localhost:3500";
 
 export function getMessages() {
   return http.get("");
+}
+
+export function getMessage(id) {
+  return http.get(`/MessageBoard/Message/${id}`);
 }
 
 export function addMessage(message) {

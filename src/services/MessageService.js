@@ -16,11 +16,11 @@ export function deleteMessage(message) {
   return http.delete(`/MessageBoard/Message/${message._id}`, message);
 }
 
-export function updateMessage(message) {
+export function updateMessage(message, user) {
   if (message._id) {
-    const body = { ...message};
+    const body = { ...message, user};
     delete body._id;
     return http.put(`/MessageBoard/Message/${message._id}`, body);
   }
-  return http.post(`/MessageBoard/Message/${message._id}`, message);
+  return http.post(`/MessageBoard/Message/${message._id}`, {message, user});
 }

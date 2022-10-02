@@ -2,8 +2,8 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "../common/Form";
 import BackButton from "../common/BackButton";
-import { toast } from 'react-toastify';
 import auth from '../../services/AuthService';
+import { toastifySuccess } from "../../services/ToastifyServices";
 
 class LoginForm extends Form {
   state = {
@@ -25,15 +25,7 @@ class LoginForm extends Form {
     try {
       const { data } = this.state;
       await auth.login(data.username, data.password);
-      toast.success('🦄 You are all set!', {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastifySuccess('🦄 You are all set!')
       window.location = "/MessageBoard";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -48,15 +40,7 @@ class LoginForm extends Form {
   doDemo = async () => {
     try {
       await auth.login("Guest-Demo", "peaceful-raisin");
-      toast.success('🦄 You are all set! Your temp username: "Guest-Demo" Your temp password: "peaceful-raisin"', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastifySuccess('🦄 You are all set! Your temp username: "Guest-Demo" Your temp password: "peaceful-raisin"')
       setTimeout(() => {
         window.location = "/MessageBoard";
       }, 5000)
@@ -73,27 +57,24 @@ class LoginForm extends Form {
   render() {
     return (
       <div>
-        <div>
-          <div className="mt-5 d-flex justify-content-center">
-            <div className="col-6">
-              <h2 className="mt-5 mb-5">Log in</h2>
-              <form onSubmit={this.handleSubmit}>
-                {this.renderInput("username", "Username")}
-                {this.renderInput("password", "Password", "password")}
-                <div className="mt-5 d-flex justify-content-between">
-                  <btn onClick={() => this.doSubmit()} className="btn btn-outline-success">
-                    Log in
+        <div className="mt-5 d-flex justify-content-center">
+          <div className="col-6">
+            <h2 className="mt-5 mb-5">Log in</h2>
+            <form onSubmit={this.handleSubmit}>
+              {this.renderInput("username", "Username")}
+              {this.renderInput("password", "Password", "password")}
+              <div className="mt-5 d-flex justify-content-between">
+                <btn onClick={() => this.doSubmit()} className="btn btn-outline-success">
+                  Log in
+                </btn>
+                <div>
+                  <btn onClick={() => this.doDemo()} className="btn btn-primary me-4">
+                    I want to see a demo
                   </btn>
-                  <div>
-                    <btn onClick={() => this.doDemo()} className="btn btn-primary me-4">
-                      I want to see a demo
-                    </btn>
-                    <BackButton />
-                  </div>
+                  <BackButton />
                 </div>
-
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

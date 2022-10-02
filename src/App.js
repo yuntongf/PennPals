@@ -1,22 +1,23 @@
-import React, { Component } from "react";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import {React, Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
+import { getUser } from "./services/UserService";
+import { toastify, toastifySuccess } from "./services/ToastifyServices";
+import { getMessages, addMessage, updateMessage, deleteMessage} from "./services/MessageService";
 import NavBar from "./components/large components/NavBar";
 import Logout from "./components/common/Logout";
 import MessageCompose from "./components/pages/MessageCompose";
-import MessagesContext from "./components/contexts/MessagesContext";
 import NotFound from "./components/pages/NotFound";
 import MessageReply from "./components/pages/MessageReply";
-import MessageBoard from "./components/large components/MessageBoard";
+import MessageBoard from "./components/large components/MessageBoard/MessageBoard";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
-import { getMessages, addMessage, updateMessage, deleteMessage} from "./services/MessageService";
-import "./App.css";
-import "react-toastify/dist/ReactToastify.css";
-import UserContext from "./components/contexts/UserContexts";
-import getDate from './components/common/Date';
+import MessagesContext from "./contexts/MessagesContext";
+import UserContext from "./contexts/UserContexts";
+
 class App extends Component {
   state = {
     messages: [],
@@ -25,86 +26,75 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
+      const user = getUser();
       this.setState({user});
     } catch (ex) {
-        toast('🦄 Welcome! Please register for an account or log in.', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }); 
+        toastify('🦄 Welcome! Please register for an account or log in.'); 
     }
-    const { data:message} = await getMessages();
-    this.setState({messages:message});
+    const { data:messages} = await getMessages();
+    for (var message of messages) {
+      var count = 0;
+      for (var liked of getUser().liked) {
+        if (message._id === liked) {
+          count ++;
+        }
+      }
+      if (count % 2 === 1) {
+        message.liked = true
+      } else {
+        message.liked = false
+      }
+    }
+    this.setState({messages:messages});
   }
 
   handleSubmit = async (message) => {
-    message.date = getDate();
     const originalMessages = this.state.messages;
     try {
-    const {data} = await addMessage(message);
-    const messages = [data, ...this.state.messages];
-    toast.success('🦄 Posted!', {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-    this.setState({ messages });
+      const {data} = await addMessage(message);
+      const messages = [data, ...this.state.messages];
+      toastifySuccess('🦄 Posted!');
+      this.setState({ messages });
     } catch {
-      //alert("add failed...");
+      alert("add failed...");
       this.setState(originalMessages);
     }
     
   } 
 
-
   handleReply = async (message) => {
-    //if (!message) return;
     const originalMessages = {...this.state.messages};
     let msgs = [...this.state.messages];
     const mesOther = msgs.filter((m) => (m._id!==message._id));
     msgs = [...mesOther, message];
     this.setState({ messages:msgs });
-    toast.success('🦄 Comment posted!', {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
+    toastifySuccess('🦄 Comment posted!')
     try {
       await updateMessage(message);
     } catch {
-      //alert("add reply failed...");
+      alert("add reply failed...");
       this.setState(originalMessages);
     }
   }
 
   handleLike = async (message) => {
-    if (!message) return;
-    else {
-    const originalMessages = this.state.messages;
-    const messages = [...this.state.messages];
-    const [m] = messages.filter(me => me._id === message._id);
-    m.replies = message.replies;
-    this.setState({ messages });
+      const originalMessages = this.state.messages;
+      const messages = [...this.state.messages];
+      const [m] = messages.filter(me => me._id === message._id);
+      m.replies = message.replies;
+      this.setState({ messages });
+      let user = getUser();
+      user.liked.includes(message._id) ?
+        user.liked = user.liked.filter((l) => l !== message._id)
+        :
+        user.liked = [...user.liked, message._id];
     try {
-      await updateMessage(m);
+      const res = await updateMessage(m, user);
+      localStorage.setItem("token", res.data.token);
     } catch {
-      //alert("update failed...")
+      alert("update failed...")
+      this.setState(originalMessages);
     }
-  }
 
   };
 
@@ -118,7 +108,7 @@ class App extends Component {
     try {
       await updateMessage(messages[id]);
     } catch {
-      //alert("update failed...")
+      alert("update failed...")
       this.setState(originalMessages);
     }
   }
@@ -129,18 +119,10 @@ class App extends Component {
     const messages = this.state.messages.filter((m) => m._id !== mes._id);
     this.setState({messages});
     try {
-      toast.success('🦄 Post deleted!', {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
       await deleteMessage(mes);
+      toastifySuccess('🦄 Post deleted!')
     } catch (e) {
-      //alert("delete failed...");
+      alert("delete failed...");
       if (e.response && e.response.status === 404) {
         alert("404 message does not exist");
       }
@@ -160,7 +142,11 @@ class App extends Component {
               element={this.state.user ? 
                 <UserContext.Provider value={this.state.user}>
                 <UserContext.Provider value={this.state.user}>
-                <MessagesContext.Provider value={[(m) => this.handleLike(m), (m)=>this.handleReport(m), (m)=>this.handleReply(m), (m) => this.handleDelete(m)]}>
+                <MessagesContext.Provider value={
+                  [(m) => this.handleLike(m), 
+                  (m)=>this.handleReport(m), 
+                  (m)=>this.handleReply(m), 
+                  (m) => this.handleDelete(m)]}>
                 <MessageReply
                   messages={this.state.messages}
                   handleLike={(m) => this.handleLike(m)}
@@ -170,7 +156,8 @@ class App extends Component {
                 />
                 </MessagesContext.Provider>
                 </UserContext.Provider>
-                </UserContext.Provider> :
+                </UserContext.Provider> 
+                :
                 <LoginPage messages={this.state.messages}/>
               }
             />
@@ -192,16 +179,24 @@ class App extends Component {
             <Route
               path="/Register"
               element={
-                <MessagesContext.Provider value={[(m) => this.handleLike(m), (m)=>this.handleReport(m), (m)=>this.handleReply(m), (m) => this.handleDelete(m)]}>
-                <RegisterPage messages={this.state.messages}/>
+                <MessagesContext.Provider value={
+                  [(m) => this.handleLike(m), 
+                  (m)=>this.handleReport(m), 
+                  (m)=>this.handleReply(m), 
+                  (m) => this.handleDelete(m)]}>
+                  <RegisterPage messages={this.state.messages}/>
                 </MessagesContext.Provider>
               }
             />
             <Route
               path="/Login"
               element={
-                <MessagesContext.Provider value={[(m) => this.handleLike(m), (m)=>this.handleReport(m), (m)=>this.handleReply(m), (m) => this.handleDelete(m)]}>
-                <LoginPage messages={this.state.messages}/>
+                <MessagesContext.Provider value={
+                  [(m) => this.handleLike(m), 
+                  (m)=>this.handleReport(m), 
+                  (m)=>this.handleReply(m),
+                  (m) => this.handleDelete(m)]}>
+                  <LoginPage messages={this.state.messages}/>
                 </MessagesContext.Provider>
               }
             />
@@ -213,12 +208,25 @@ class App extends Component {
               path="/MessageBoard"
               element={
                 <UserContext.Provider value={this.state.user}>
-                <MessageBoard
+                  <MessageBoard
                   messages={this.state.messages}
                   handleLike={(m) => this.handleLike(m)}
                   handleReport={(m) => this.handleReport(m)}
                   handleDelete={(m) => this.handleDelete(m)}
-                />
+                  />
+                </UserContext.Provider>
+              }
+            />
+            <Route
+              path="/liked"
+              element={
+                <UserContext.Provider value={this.state.user}>
+                  <MessageBoard
+                  messages={this.state.messages.filter((m) => getUser().liked.includes(m._id))}
+                  handleLike={(m) => this.handleLike(m)}
+                  handleReport={(m) => this.handleReport(m)}
+                  handleDelete={(m) => this.handleDelete(m)}
+                  />
                 </UserContext.Provider>
               }
             />
@@ -226,7 +234,7 @@ class App extends Component {
             <Route
               path="/"
               element={
-                <Navigate to="/MessageBoard" replace />
+                <Navigate to={this.state.user ? "/MessageBoard" : "/Login"} replace />
               }
             />
             <Route path="*" element={<Navigate to="/not-found" replace />} />

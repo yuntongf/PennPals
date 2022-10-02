@@ -1,6 +1,6 @@
-import ReplyWritingBoard from "./ReplyPanel/ReplyWritingBoard";
-import ReplyDisplayBoard from './ReplyPanel/ReplyDisplayBoard';
-import UserContext from '../../contexts/UserContexts';
+import ReplyWritingBoard from "./ReplyWritingBoard";
+import ReplyDisplayBoard from './ReplyDisplayBoard';
+import UserContext from '../../../../contexts/UserContexts';
 import React, { useContext } from "react";
 
 const ReplyPanel = ({ message, handleLike, handleReport, handleReply }) => {

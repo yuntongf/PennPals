@@ -1,4 +1,4 @@
-import Board from './MessageBoard/Board'
+import Board from './Board'
 
 const MessageBoard = ({ messages, handleLike, handleReport, handleDelete }) => {
     return (

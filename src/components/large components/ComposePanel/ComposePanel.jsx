@@ -1,4 +1,5 @@
 import { React, Component } from 'react';
+import getDate from '../../common/Date';
 
 class ComposePanel extends Component {
    state = {
@@ -10,7 +11,8 @@ class ComposePanel extends Component {
          reported: false,
          liked: false,
          read: false,
-         deleted: false
+         deleted: false,
+         date: getDate()
       }
    }
 
@@ -30,7 +32,7 @@ class ComposePanel extends Component {
       return (
          <div>
             <div className="form-area">
-               <form role="form">
+               <form>
                   <div className="mt-4 mb-2 form-group">
                      <textarea onChange={this.handleTitleChange} className="form-control" type="textarea" id="subject" placeholder="Title" maxlength="6000" rows="3"></textarea>
                   </div>

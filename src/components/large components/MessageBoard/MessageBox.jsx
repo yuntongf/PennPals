@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import ReportButton from "../../common/ReportButton";
 import DeleteButton from "../../common/DeleteButton";
 import { useContext } from 'react';
-import UserContext from '../../contexts/UserContexts';
+import UserContext from '../../../contexts/UserContexts';
 
 const MessageBox = ({ handleLike, handleDelete, handleReport, message }) => {
    let classesRead = "card list-group-item list-group-item-action m-2 p-4 flex-column align-items-start";

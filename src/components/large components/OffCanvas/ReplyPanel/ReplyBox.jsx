@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import UserContext from '../../../contexts/UserContexts';
+import UserContext from '../../../../contexts/UserContexts';
 
 const ReplyBox = ({ message, reply, handleLike, handleReport }) => {
    const user = useContext(UserContext);
    let classesLike = "btn btn-sm me-2 col-1 btn-outline-light";
    if (reply.liked) classesLike = "btn btn-sm me-2 btn-outline-danger";
-   const repliesOther = message.replies.filter((r) => r._id != reply._id);
+   const repliesOther = message.replies.filter((r) => r._id !== reply._id);
 
    const handleLikeReply = () => {
       let r = reply;

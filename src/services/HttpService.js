@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import auth from "./AuthService";
+//import auth from "./AuthService";
 
 /*if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "http://localhost:3000";

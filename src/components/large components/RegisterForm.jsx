@@ -1,11 +1,9 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "../common/Form";
-import { useNavigate } from "react-router-dom";
 import BackButton from "../common/BackButton";
 import { toast } from 'react-toastify';
 import { register } from '../../services/UserService';
-import { Link } from 'react-router-dom';
 
 class RegisterForm extends Form {
   state = {

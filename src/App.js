@@ -106,7 +106,7 @@ class App extends Component {
     messages[id].replies = m.replies;
     this.setState({ messages });
     try {
-      await updateMessage(messages[id]);
+      await updateMessage(messages[id], getUser());
     } catch {
       alert("update failed...")
       this.setState(originalMessages);

@@ -69,7 +69,7 @@ class LoginForm extends Form {
                 </btn>
                 <div>
                   <btn onClick={() => this.doDemo()} className="btn btn-primary me-4">
-                    I want to see a demo
+                    Click here to see a demo
                   </btn>
                   <BackButton />
                 </div>

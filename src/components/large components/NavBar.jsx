@@ -27,8 +27,8 @@ const NavBar = ({ user }) => {
                         </li>
                         {!user &&
                             <React.Fragment>
-                                <btn onClick={() => window.location = "/Login"} className="btn me-2 btn-primary">
-                                    see demo
+                                <btn onClick={() => window.location = "/Login"} className="btn btn-sm me-2 btn-primary">
+                                    <div className='mt-1'> See demo</div>
                                 </btn>
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/Register"> Register</Link>

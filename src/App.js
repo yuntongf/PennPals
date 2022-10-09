@@ -70,7 +70,7 @@ class App extends Component {
     this.setState({ messages:msgs });
     toastifySuccess('🦄 Comment posted!')
     try {
-      await updateMessage(message);
+      await updateMessage(message, getUser());
     } catch {
       alert("add reply failed...");
       this.setState(originalMessages);

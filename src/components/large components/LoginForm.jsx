@@ -1,7 +1,6 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "../common/Form";
-import BackButton from "../common/BackButton";
 import auth from '../../services/AuthService';
 import { toastifySuccess } from "../../services/ToastifyServices";
 
@@ -37,22 +36,6 @@ class LoginForm extends Form {
     }
   };
 
-  doDemo = async () => {
-    try {
-      await auth.login("Guest-Demo", "peaceful-raisin");
-      toastifySuccess('🦄 You are all set! Your temp username: "Guest-Demo" Your temp password: "peaceful-raisin"')
-      setTimeout(() => {
-        window.location = "/MessageBoard";
-      }, 5000)
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        errors.password = ex.response.data;
-        this.setState({ errors });
-      }
-    }
-  };
 
   render() {
     return (
@@ -64,15 +47,10 @@ class LoginForm extends Form {
               {this.renderInput("username", "Username")}
               {this.renderInput("password", "Password", "password")}
               <div className="mt-5 d-flex justify-content-between">
-                <btn onClick={() => this.doSubmit()} className="btn btn-outline-success">
+                <btn onClick={() => this.doSubmit()} className="btn btn-outline-primary">
                   Log in
                 </btn>
-                <div>
-                  <btn onClick={() => this.doDemo()} className="btn btn-primary me-4">
-                    Click here to see a demo
-                  </btn>
-                  <BackButton />
-                </div>
+                
               </div>
             </form>
           </div>

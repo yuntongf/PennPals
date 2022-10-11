@@ -1,7 +1,6 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "../common/Form";
-import BackButton from "../common/BackButton";
 import { toast } from 'react-toastify';
 import { register } from '../../services/UserService';
 
@@ -64,10 +63,9 @@ class RegisterForm extends Form {
                 {this.renderInput("username", "Username")}
                 {this.renderInput("password", "Password", "password")}
                 <div className="mt-5 d-flex justify-content-between">
-                  <btn onClick={() => this.doSubmit()} className="btn btn-primary">
+                  <btn onClick={() => this.doSubmit()} className="btn btn-outline-primary">
                     Register
                   </btn>
-                  <BackButton />
                 </div>
 
               </form>

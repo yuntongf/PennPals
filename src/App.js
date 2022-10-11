@@ -17,7 +17,6 @@ import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import MessagesContext from "./contexts/MessagesContext";
 import UserContext from "./contexts/UserContexts";
-
 class App extends Component {
   state = {
     messages: [],
